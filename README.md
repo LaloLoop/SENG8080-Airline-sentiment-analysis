@@ -8,7 +8,7 @@ This repository contains the development for Conestoga's SENG8080 - Case Studies
 
 An initial analysis is done with the help of the following resources.
 
-* [Sentiment Analysis on US Airline dataset (1 of 2)](https://towardsdatascience.com/sentiment-analysis-on-us-twitter-airline-dataset-1-of-2
+* [Sentiment Analysis on US Airline dataset (1 of 2)](https://towardsdatascience.com/sentiment-analysis-on-us-twitter-airline-dataset-1-of-2)
 
 ## Sentiment Analysis on fresh Tweets
 
