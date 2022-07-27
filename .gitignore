@@ -198,3 +198,5 @@ sentencepiece-0.1.96.tar.gz
 .twitter_keys.yaml
 config.properties
 !examples/config.properties
+elastic.ini
+!examples/elastic.ini
