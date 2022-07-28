@@ -1,21 +1,23 @@
-from confluent_kafka import Producer, Consumer, KafkaError
-import ccloud_lib
 import json
+import configparser
 from transformers import pipeline
 from elasticsearch import Elasticsearch
-import configparser
-import pandas as pd
-import os
-import sys
+from confluent_kafka import Producer, Consumer, KafkaError
+import ccloud_lib
+from searchtweets import ResultStream, gen_request_parameters
 
-def sample_data(airline, filename, sample_size=10):
-    aircanada_df = pd.read_csv(filename)
-    aircanada_sample_df = aircanada_df.sample(sample_size)
-
-    for i in range(aircanada_sample_df.iloc[:, 1:].shape[0]):
-        row_json = aircanada_df.iloc[i, 1:].to_dict()
-        row_json['airline'] = airline
-        yield row_json
+def search_tweets(text_query: str, search_args, results_per_call=10, max_results=10):
+    """
+    Returns a tweet stream for the provided text query, it can then be iterated to retrieve each individual tweet.
+    Args:
+        text_query (str): The topic of interest or text to search for.
+        search_args (dict): Arguments needed to authenticate.
+    Returns:
+        a result stream iterable/generator.
+    """
+    query = gen_request_parameters(text_query, results_per_call=results_per_call, granularity=None, tweet_fields='created_at')
+    rs = ResultStream(request_parameters=query, max_results=max_results, max_pages=1, **search_args)
+    return rs.stream()
 
 class BaseProducer:
     """Defines the basic connectivity to reach Kafka instance hosted in Confluent Cloud"""
